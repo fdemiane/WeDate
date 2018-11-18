@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "781869329069",
+    "firebase_url": "https://dateme-fa221.firebaseio.com",
+    "project_id": "dateme-fa221",
+    "storage_bucket": "dateme-fa221.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:781869329069:android:25799c01927cd058",
+        "android_client_info": {
+          "package_name": "com.example.fredd.wedate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "781869329069-06kvbe70ua45fgk25utnkunpdnq19vp9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFVpHG5oRqkKtviobYZkUn8ywO0E8Ygqo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
