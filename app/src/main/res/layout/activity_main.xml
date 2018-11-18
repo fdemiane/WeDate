@@ -7,12 +7,12 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/passwordID"
+        android:id="@+id/Text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/editText"
-        android:layout_marginBottom="227dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/usernameID"
+        android:layout_marginTop="205dp"
         android:text="Password"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,12 +21,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/userNameID"
+        android:id="@+id/Text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/editText"
-        android:layout_marginTop="126dp"
+        android:layout_alignStart="@+id/Text2"
+        android:layout_marginTop="87dp"
         android:text="User Name"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -35,22 +35,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/usernameID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/Text1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="180dp"
         android:ems="10"
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/passwordID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="168dp"
+        android:layout_centerInParent="true"
         android:ems="10"
         android:inputType="textPassword" />
 
@@ -60,8 +57,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="61dp"
+        android:layout_marginBottom="54dp"
         android:text="Validate"
         android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/noteId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="147dp" />
 
 </RelativeLayout>

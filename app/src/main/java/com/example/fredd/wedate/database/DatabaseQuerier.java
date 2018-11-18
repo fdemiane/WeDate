@@ -3,6 +3,7 @@ package com.example.fredd.wedate.database;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.fredd.wedate.MainActivity;
 import com.example.fredd.wedate.monitor.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -18,8 +19,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 public class DatabaseQuerier {
+
 
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
@@ -28,15 +31,21 @@ public class DatabaseQuerier {
     private static final String BIRTH_YEAR = "birth";
     private static final String SEX = "sex";
     private static final String TAG = "tag";
+    private static User result;
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    static FirebaseFirestore db;
 
-    public void addUsers(Collection<User> users) throws Exception {
-       for(User user:users)
-           addUser(user);
+    static {
+        db = FirebaseFirestore.getInstance();
     }
 
-    public void addUser(User user) throws Exception {
+
+    public static void addUsers(Collection<User> users) throws Exception {
+        for (User user : users)
+            addUser(user);
+    }
+
+    public static void addUser(User user) throws Exception {
 
 
         user.encrypt();
@@ -66,38 +75,19 @@ public class DatabaseQuerier {
                 });
     }
 
-    public void getUserByUsername(String username) {
+    public static void getUserByUsername(String username, final MainActivity activityRef) throws Exception {
+        result = new User();
+        final boolean flag = false;
+
         CollectionReference citiesRef = db.collection("users");
-        Query query = citiesRef.whereEqualTo("username", username);
+        Query query = citiesRef.whereEqualTo("username", result.encryptString(username));
+        Log.d("TAG" , username +" "+result.encryptString(username));
 
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        //Object obj = document.
-                    }
 
-                } else {
-
-                }
-            }
-        });
-
-    }
-
-    public User getUserByFirstName(String first) throws Exception {
-
-        final User result = new User();
-
-        CollectionReference citiesRef = db.collection("users");
-        Query query = citiesRef.whereEqualTo("first", first);
-
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    Log.d("TAG", "death");
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Map<String, Object> mp = document.getData();
                         for (Map.Entry<String, Object> entry : mp.entrySet()) {
@@ -115,7 +105,79 @@ public class DatabaseQuerier {
                                     result.setLastName((String) entry.getValue());
                                     break;
                                 case BIRTH_YEAR:
-                                    result.setBirthYear((int) entry.getValue());
+                                    result.setBirthYear((int) ((long)entry.getValue()));
+                                    break;
+                                case SEX:
+                                    result.setSex((String) entry.getValue());
+                                    break;
+                                case TAG:
+                                    result.setTag((String) entry.getValue());
+                                    break;
+
+
+                            }
+                        }
+                    }
+
+
+                } else {
+
+
+                }
+                if (result.getUsername() != null) {
+
+                    result.setEncrypted(true);
+                    try {
+                        result.decrypt();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
+                    activityRef.authenticate(result);
+                } else
+                    activityRef.authenticate(result);
+            }
+        });
+
+
+    }
+
+    public static User getUserByFirstName(String first) throws Exception {
+
+        result = new User();
+
+        CollectionReference citiesRef = db.collection("users");
+
+        Query query = citiesRef.whereEqualTo("first", result.encryptString(first));
+
+
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Map<String, Object> mp = document.getData();
+                        for (Map.Entry<String, Object> entry : mp.entrySet()) {
+                            switch (entry.getKey()) {
+
+                                case USERNAME:
+                                    result.setUsername((String) entry.getValue());
+                                    Log.d("TAG", result.getUsername());
+
+                                    break;
+                                case PASSWORD:
+                                    result.setPassword((String) entry.getValue());
+                                    break;
+                                case FIRST_NAME:
+                                    result.setFirstName((String) entry.getValue());
+                                    break;
+                                case LAST_NAME:
+                                    result.setLastName((String) entry.getValue());
+                                    break;
+                                case BIRTH_YEAR:
+                                    //result.setBirthYear((int) entry.getValue());
                                     break;
                                 case SEX:
                                     result.setSex((String) entry.getValue());
@@ -128,15 +190,26 @@ public class DatabaseQuerier {
                         }
                     }
 
+                    result.setEncrypted(true);
+                    try {
+                        result.decrypt();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
                 } else {
 
 
                 }
+
+
             }
+
+
         });
 
-        result.setEncrypted(true);
-        result.decrypt();
+
         return result;
     }
 

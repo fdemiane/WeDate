@@ -1,31 +1,41 @@
-package com.example.fredd.wedate.database;
+package com.example.fredd.wedate.monitor;
 
-import com.example.fredd.wedate.encryption.MD5;
-import com.example.fredd.wedate.monitor.Graph;
-import com.example.fredd.wedate.monitor.User;
+import android.util.Log;
+
+import com.example.fredd.wedate.shared.DataFlow;
 
 import java.util.Set;
 
-public class Authentication {
+public class ReferenceMonitor {
     private Graph hierarchyGraph = new Graph();
-    private MD5 md5 = new MD5();
-    public Authentication() throws Exception {
+
+    public ReferenceMonitor() throws Exception {
         initReferenceTree();
-        /*Set<String> set = hierarchyGraph.getDominating("president");
-        for(String str : set)
-            System.out.println(str);*/
+    }
+
+    public void setAttributes(User user)
+    {
+        String tag = user.getTag();
+        Set<String> dominated = hierarchyGraph.getDominating(tag);
+        Set<String> attributes = hierarchyGraph.getAttributes(tag);
+        DataFlow.user = user;
+        DataFlow.attributes.setCanComment(dominated);
+        DataFlow.attributes.setLikables(dominated);
+        DataFlow.attributes.setCanMath(attributes.contains("matchmake"));
+        DataFlow.attributes.setCanSpy(attributes.contains("spy"));
+        DataFlow.attributes.setCanSuperLike(attributes.contains("superlike"));
+        Log.d("TAG" , ""+DataFlow.attributes.isCanMath() +" "+DataFlow.attributes.isCanSpy() + " "+DataFlow.attributes.isCanSuperLike());
 
     }
 
-
-
     private void initReferenceTree() throws Exception {
-
         //Groups creation
         hierarchyGraph.createGroup("allstudents");
         hierarchyGraph.createGroup("bsstudents");
         hierarchyGraph.createGroup("csstudents");
         hierarchyGraph.createGroup("artstudents");
+
+
         hierarchyGraph.linkGroupToNode("bsstudents", "allstudents");
         hierarchyGraph.linkGroupToNode("csstudents", "allstudents");
         hierarchyGraph.linkGroupToNode("artstudents", "allstudents");
@@ -67,11 +77,12 @@ public class Authentication {
         hierarchyGraph.add("artfaculty", "artchair");
         hierarchyGraph.linkGroupToNode("artstudents", "artfaculty");
 
+        hierarchyGraph.addAttribute("dos" , "superlike");
+        hierarchyGraph.addAttribute("vice-president" , "spy");
+        hierarchyGraph.addAttribute("president" , "matchmake");
 
-    }
 
-    public static void main(String[] args) throws Exception {
-        Authentication authentication = new Authentication();
+
 
     }
 }

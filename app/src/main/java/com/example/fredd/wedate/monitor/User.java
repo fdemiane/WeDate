@@ -120,6 +120,16 @@ public class User {
 
     }
 
+    public String encryptString(String str) throws Exception {
+        AffineKey affineKey = new AffineKey(7, 3, (int) Math.pow(2, 16));
+        int[][] arr = {{1, 1, 1},
+                {4, 4, 1},
+                {1, 8, 1}};
+        HillKey hillKey = new HillKey(arr);
+        DoubleEncryption encryption = new DoubleEncryption();
+        return encryption.encrypt(str , hillKey,affineKey);
+    }
+
     public void decrypt() throws Exception {
         if (!encrypted)
             return;
