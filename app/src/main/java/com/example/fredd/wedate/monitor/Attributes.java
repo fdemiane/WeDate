@@ -5,19 +5,19 @@ import java.util.Set;
 
 public class Attributes {
 
-    private Set<String> likables = new HashSet<>();
+    private Set<String> canSeeWhoLiked = new HashSet<>();
     private Set<String> canComment = new HashSet<>();
     private boolean canMath = false;
     private boolean canSuperLike = false;
     private boolean canSpy = false;
 
 
-    public Set<String> getLikables() {
-        return likables;
+    public Set<String> getCanSeeWhoLiked() {
+        return canSeeWhoLiked;
     }
 
-    public void setLikables(Set<String> likables) {
-        this.likables = likables;
+    public void setCanSeeWhoLiked(Set<String> canSeeWhoLiked) {
+        this.canSeeWhoLiked = canSeeWhoLiked;
     }
 
     public Set<String> getCanComment() {

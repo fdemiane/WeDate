@@ -20,7 +20,7 @@ public class ReferenceMonitor {
         Set<String> attributes = hierarchyGraph.getAttributes(tag);
         DataFlow.user = user;
         DataFlow.attributes.setCanComment(dominated);
-        DataFlow.attributes.setLikables(dominated);
+        DataFlow.attributes.setCanSeeWhoLiked(dominated);
         DataFlow.attributes.setCanMath(attributes.contains("matchmake"));
         DataFlow.attributes.setCanSpy(attributes.contains("spy"));
         DataFlow.attributes.setCanSuperLike(attributes.contains("superlike"));

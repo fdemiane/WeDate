@@ -1,12 +1,14 @@
 package com.example.fredd.wedate.monitor;
 
+import android.support.annotation.NonNull;
+
 import com.example.fredd.wedate.encryption.AffineEncryption;
 import com.example.fredd.wedate.encryption.AffineKey;
 import com.example.fredd.wedate.encryption.DoubleEncryption;
 import com.example.fredd.wedate.encryption.HillKey;
 import com.example.fredd.wedate.encryption.MD5;
 
-public class User {
+public class User implements Comparable<User> {
     private String username;
     private String password;
     private String firstName;
@@ -120,7 +122,7 @@ public class User {
 
     }
 
-    public String encryptString(String str) throws Exception {
+    public static String encryptString(String str) throws Exception {
         AffineKey affineKey = new AffineKey(7, 3, (int) Math.pow(2, 16));
         int[][] arr = {{1, 1, 1},
                 {4, 4, 1},
@@ -128,6 +130,16 @@ public class User {
         HillKey hillKey = new HillKey(arr);
         DoubleEncryption encryption = new DoubleEncryption();
         return encryption.encrypt(str , hillKey,affineKey);
+    }
+
+    public static String decryptString(String str) throws Exception {
+        AffineKey affineKey = new AffineKey(7, 3, (int) Math.pow(2, 16));
+        int[][] arr = {{1, 1, 1},
+                {4, 4, 1},
+                {1, 8, 1}};
+        HillKey hillKey = new HillKey(arr);
+        DoubleEncryption encryption = new DoubleEncryption();
+        return encryption.decrypt(str , hillKey,affineKey);
     }
 
     public void decrypt() throws Exception {
@@ -148,5 +160,10 @@ public class User {
         tag = decryption.decrypt(tag, hillKey, affineKey);
         birthYear = affineDecryption.decryptAffine(birthYear, affineKey, (int) Math.pow(2, 16));
         encrypted = false;
+    }
+
+    @Override
+    public int compareTo(@NonNull User o) {
+        return username.compareToIgnoreCase(o.username);
     }
 }

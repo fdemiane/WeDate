@@ -8,13 +8,14 @@ import java.util.TreeSet;
 
 public class Graph {
     ArrayList<Node> root = new ArrayList<>();
-    ArrayList<Node> groups = new ArrayList<>();
+    ArrayList<Boolean> groups = new ArrayList<>();
     HashMap<String, Set<String>> attributesMap = new HashMap<>();
 
     public void addRoot(String name) throws Exception {
         if (checkContains(name))
             throw new Exception("The graph already contains the name: " + name);
         root.add(new Node(name));
+        groups.add(false);
     }
 
     public void add(String name, String predecessor) throws Exception {
@@ -121,6 +122,7 @@ public class Graph {
         return result;
     }
 
+
     public Set<String> getDominating(Node leaf) {
         if (leaf == null)
             return null;
@@ -140,11 +142,36 @@ public class Graph {
         return set;
     }
 
-    public void createGroup(String groupName) {
+    public void createGroup(String groupName) throws Exception {
+        if (checkContains(groupName))
+            throw new Exception("The graph already contains the name: " + groupName);
         root.add(new Node(groupName));
+        groups.add(true);
     }
 
+    public String getGroupName(String name) {
+        for (int i = 0; i < root.size(); i++) {
+            Node temp = root.get(i);
+            if (temp.name.equals(name) && groups.get(i))
+                return root.get(i).name;
+            temp = getNode(name, temp);
+            if (temp != null && groups.get(i))
+                return root.get(i).name;
 
+        }
+
+        return null;
+    }
+
+    public boolean checkIfBelongsToSameGroup(String name1, String name2) {
+        String g1 = getGroupName(name1);
+        if (g1 == null)
+            return false;
+        String g2 = getGroupName(name2);
+        if (g2 == null)
+            return false;
+        return g1.equals(g2);
+    }
 
 
     public void linkGroupToNode(String group1, String node) throws Exception {
@@ -162,19 +189,34 @@ public class Graph {
 
     }
 
+    public String getGroup(String name) {
+        for (int i = 0; i < root.size(); i++) {
+            if (groups.get(i)) {
+                Node temp = getNode(name , root.get(i));
+                if(temp!=null)
+                    return root.get(i).name;
+            }
+        }
+
+        return null;
+    }
+
     public static void main(String[] args) throws Exception {
         Graph graph = new Graph();
         graph.createGroup("students");
         graph.createGroup("csstudents");
         graph.add("csjunior", "csstudents");
-        graph.linkGroupToNode("csstudents" , "students");
+        graph.linkGroupToNode("csstudents", "students");
         graph.addRoot("president");
         graph.add("vice1", "president");
         graph.add("vice2", "president");
-        graph.linkGroupToNode("students" , "president");
-        Set<String> set = graph.getDominating("president");
-        for(String str:set)
-            System.out.println(str);
+        graph.linkGroupToNode("students", "president");
+
+        System.out.println(graph.getGroup("csjunior"));
+
+       /* Set<String> set = graph.getDominating("president");
+        for (String str : set)
+            System.out.println(str);*/
 
 
     }
