@@ -35,6 +35,7 @@ public class DatabaseQuerier {
     private static final String BIRTH_YEAR = "birth";
     private static final String SEX = "sex";
     private static final String TAG = "tag";
+    private static final String URL = "url";
     private static User result;
     private static String flowString = "";
 
@@ -62,6 +63,7 @@ public class DatabaseQuerier {
         userMp.put(BIRTH_YEAR, user.getBirthYear());
         userMp.put(SEX, user.getSex());
         userMp.put(TAG, user.getTag());
+        userMp.put(URL , user.getUrl());
 
 
         db.collection("users")
@@ -118,6 +120,8 @@ public class DatabaseQuerier {
                                 case TAG:
                                     result.setTag((String) entry.getValue());
                                     break;
+                                case URL:
+                                    result.setUrl((String) entry.getValue());
 
 
                             }
@@ -267,6 +271,8 @@ public class DatabaseQuerier {
                                             case TAG:
                                                 user.setTag((String) entry.getValue());
                                                 break;
+                                            case URL:
+                                                user.setUrl((String) entry.getValue());
 
 
                                         }
@@ -307,10 +313,13 @@ public class DatabaseQuerier {
 
                                 User user = new User();
                                 Map<String, Object> mp = document.getData();
+
                                 for (Map.Entry<String, Object> entry : mp.entrySet()) {
+
                                     switch (entry.getKey()) {
                                         case USERNAME:
                                             user.setUsername((String) entry.getValue());
+
                                             break;
                                         case PASSWORD:
                                             user.setPassword((String) entry.getValue());
@@ -330,9 +339,13 @@ public class DatabaseQuerier {
                                         case TAG:
                                             user.setTag((String) entry.getValue());
                                             break;
+                                        case URL:
+                                            user.setUrl((String) entry.getValue());
+
 
 
                                     }
+                                }
 
                                     user.setEncrypted(true);
                                     try {
@@ -340,11 +353,11 @@ public class DatabaseQuerier {
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
-                                    Log.d("TAG" , "test");
-                                    Log.d("TAG",user.getUsername());
+
+
                                     users.add(user);
 
-                                }
+
 
 
                             }

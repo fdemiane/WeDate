@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="88dp"
+        android:layout_height="67dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:orientation="horizontal"
@@ -17,7 +17,7 @@
         tools:layout_editor_absoluteY="8dp">
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/likeID"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -26,7 +26,7 @@
             tools:layout_editor_absoluteY="51dp" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/commentID"
             android:layout_width="114dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -35,19 +35,65 @@
             tools:layout_editor_absoluteY="36dp" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/superID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Previous"
+            android:text="Super Like"
             android:textSize="14sp" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/nextID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Next" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="353dp"
+        android:layout_height="484dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@android:drawable/btn_dialog" />
+
+    <TextView
+        android:id="@+id/nameID"
+        android:layout_width="355dp"
+        android:layout_height="41dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="57dp"
+        android:text="Name"
+        android:textColor="@android:color/background_dark"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/matchID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:text="matchmake: " />
+
+    <TextView
+        android:id="@+id/spyID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="spy: " />
+
+    <TextView
+        android:id="@+id/seeID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:text="see: " />
 
 </RelativeLayout>

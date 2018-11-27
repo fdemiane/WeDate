@@ -1,6 +1,7 @@
 package com.example.fredd.wedate.monitor;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.example.fredd.wedate.encryption.AffineEncryption;
 import com.example.fredd.wedate.encryption.AffineKey;
@@ -15,24 +16,34 @@ public class User implements Comparable<User> {
     private String lastName;
     private String sex;
     private String tag;
+    private String url;
     private int birthYear;
 
     private MD5 md5 = new MD5();
     private boolean encrypted = false;
 
-    public User(String username, String password, String firstName, String lastName, String sex, String tag, int birthYear) {
+    public User(String username, String password, String firstName, String lastName, String sex, String tag, int birthYear, String url) {
 
         this.username = username;
         this.password = md5.encrypt(password);
         this.firstName = firstName;
         this.lastName = lastName;
         this.sex = sex;
+        this.url = url;
         this.setTag(tag);
         this.setBirthYear(birthYear);
     }
 
     public User() {
 
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
     }
 
     public void setEncrypted(boolean encrypted) {
@@ -117,6 +128,7 @@ public class User implements Comparable<User> {
         sex = encryption.encrypt(sex, hillKey, affineKey);
         tag = encryption.encrypt(tag, hillKey, affineKey);
         birthYear = affineEncryption.encryptAffine(birthYear, affineKey, (int) Math.pow(2, 16));
+        url = encryption.encrypt(url , hillKey,affineKey);
         encrypted = true;
 
 
@@ -129,7 +141,7 @@ public class User implements Comparable<User> {
                 {1, 8, 1}};
         HillKey hillKey = new HillKey(arr);
         DoubleEncryption encryption = new DoubleEncryption();
-        return encryption.encrypt(str , hillKey,affineKey);
+        return encryption.encrypt(str, hillKey, affineKey);
     }
 
     public static String decryptString(String str) throws Exception {
@@ -139,7 +151,7 @@ public class User implements Comparable<User> {
                 {1, 8, 1}};
         HillKey hillKey = new HillKey(arr);
         DoubleEncryption encryption = new DoubleEncryption();
-        return encryption.decrypt(str , hillKey,affineKey);
+        return encryption.decrypt(str, hillKey, affineKey);
     }
 
     public void decrypt() throws Exception {
@@ -159,6 +171,8 @@ public class User implements Comparable<User> {
         sex = decryption.decrypt(sex, hillKey, affineKey);
         tag = decryption.decrypt(tag, hillKey, affineKey);
         birthYear = affineDecryption.decryptAffine(birthYear, affineKey, (int) Math.pow(2, 16));
+        url = decryption.decrypt(url , hillKey , affineKey);
+        Log.d("HEYY" , url);
         encrypted = false;
     }
 

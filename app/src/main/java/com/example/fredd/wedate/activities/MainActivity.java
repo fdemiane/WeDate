@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.fredd.wedate.R;
 import com.example.fredd.wedate.database.DatabaseQuerier;
+import com.example.fredd.wedate.database.UsersAddition;
 import com.example.fredd.wedate.encryption.MD5;
 import com.example.fredd.wedate.monitor.ReferenceMonitor;
 import com.example.fredd.wedate.monitor.User;
@@ -33,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        /*try {
+            UsersAddition us = new UsersAddition();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
         toChangePasswordActivity = new Intent(this, ChangePasswordActivity.class);
         toMainScreenActivity = new Intent(this, MainScreenActivity.class);
         validateButton = (Button) findViewById(R.id.validateBtnID);
