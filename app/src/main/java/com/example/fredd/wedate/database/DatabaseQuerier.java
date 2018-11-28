@@ -196,6 +196,7 @@ public class DatabaseQuerier {
 
 
         MD5 md5 = new MD5();
+
         password = md5.encrypt(password);
         CollectionReference citiesRef = db.collection("users");
         Query query = citiesRef.whereEqualTo("password", password);

@@ -56,7 +56,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
     }
 
     public void validateStep2() throws Exception {
-        String oldPassword = oldPasswordTextField.getText().toString();
+        String oldPassword = oldPasswordTextField.getText().toString()+usernameTextField.getText();
         DatabaseQuerier.checkPasswordCorrectChangePasswordActivity(oldPassword, this);
 
 
@@ -64,7 +64,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
     public void validateStep3() throws Exception {
         String newPassword = newPasswordTextField.getText().toString();
+
         if (PasswordChecker.checkPasswordValidity(newPassword)) {
+            newPassword+= usernameTextField.getText();
             DatabaseQuerier.updatePasswordChangePasswordActivity(newPassword, this);
 
         } else {

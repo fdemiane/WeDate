@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*try {
+       /* try {
             UsersAddition us = new UsersAddition();
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     public void authenticate(User user) {
 
         MD5 md5 = new MD5();
-        String password = passwordField.getText().toString();
+        String password = passwordField.getText().toString() + user.getUsername();
         password = md5.encrypt(password);
         if (user.getUsername() == null) {
             noteField.setText("Incorrect username");
