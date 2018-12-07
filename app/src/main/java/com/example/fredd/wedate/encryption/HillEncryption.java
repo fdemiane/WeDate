@@ -78,7 +78,7 @@ public class HillEncryption {
     }
 
     public static void main(String[] args) throws Exception {
-        String test = "whosthebitch";
+        String test = "wholetthedogsout";
         int[][] arr = {{1, 1, 1},
                 {4, 4, 1},
                 {1, 8, 1}};

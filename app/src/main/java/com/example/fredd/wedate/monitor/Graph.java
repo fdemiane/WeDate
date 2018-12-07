@@ -13,7 +13,7 @@ public class Graph {
 
     public void addRoot(String name) throws Exception {
         if (checkContains(name))
-            throw new Exception("The graph already contains the name: " + name);
+            throw new Exception("The graph already contains the role: " + name);
         root.add(new Node(name));
         groups.add(false);
     }
@@ -21,7 +21,7 @@ public class Graph {
     public void add(String name, String predecessor) throws Exception {
         Node temp = getNode(predecessor);
         if (checkContains(name))
-            throw new Exception("The graph already contains the name: " + name);
+            throw new Exception("The graph already contains the role: " + name);
         temp.addLeaf(new Node(name));
     }
 
